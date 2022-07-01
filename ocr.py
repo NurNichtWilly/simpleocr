@@ -1,6 +1,6 @@
 #This script loads an image and provides a text-based output of the image
 #using the Tesseract OCR engine.
-
+import os
 
 import matplotlib.image as mpimg
 import pytesseract
@@ -25,15 +25,29 @@ def evaluate_image(image, string):
     else:
         return False
 
+#find images in the project folder and return a list of images
+def find_images():
+    #find all images in the project folder
+    images = []
+    for file in os.listdir("."):
+        if file.endswith(".png") or file.endswith(".jpg"):
+            images.append(file)
+    return images
 
-#start the script and load the image
+
+
+#start the script and load the images
 if __name__ == "__main__":
-    export_format = 'sql'
-    image = 'test.png'
-    text = ocr_image('test.png')
-    #save the image as a markdown file
-    with open('export.'+export_format, 'w') as f:
-        f.write(text)
-    print("Image saved as test.md")
-    print(evaluate_image('test.png', text))
+    images = find_images()
+    export_format = 'txt'
+
+    #loop through all images and run the OCR engine on each
+    for image in images:
+        #run the OCR engine on the image
+        text = ocr_image(image)
+        image = image[:-4]
+        with open(image + '.' + export_format, 'w') as f:
+            f.write(text)
+            print("Image saved as " + image + '.' + export_format)
+            print(evaluate_image('test.png', text))
 
