@@ -9,14 +9,16 @@ import pytesseract
 #This function takes an image and returns a string of text
 def ocr_image(image):
     #load the image using the Tesseract OCR engine
-    text = pytesseract.image_to_string(image, lang='eng')
+    lang = detect_language(image)
+    text = pytesseract.image_to_string(image, lang=lang)
     print(text)
     return text
 
 #this function takes an image and the string and evaluates how well the string matches the image
 def evaluate_image(image, string):
     #load the image using the Tesseract OCR engine
-    text = pytesseract.image_to_string(image, lang='eng')
+    lang = detect_language(image)
+    text = pytesseract.image_to_string(image, lang=lang)
     #print(text)
     #print(string)
     #print(text.find(string))
@@ -34,7 +36,11 @@ def find_images():
             images.append(file)
     return images
 
-
+#detect the language of the image using Tesseract's image_to_osd method
+def detect_language(image):
+    osd = pytesseract.image_to_osd(image)
+    lang = osd.split("Script: ")[1].split("\n")[0]
+    return lang
 
 #start the script and load the images
 if __name__ == "__main__":
@@ -50,4 +56,3 @@ if __name__ == "__main__":
             f.write(text)
             print("Image saved as " + image + '.' + export_format)
             print(evaluate_image('test.png', text))
-
