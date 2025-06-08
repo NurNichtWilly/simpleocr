@@ -34,6 +34,8 @@ def evaluate_image(image: str, string: str) -> bool:
 #find images in the project folder and return a list of images
 def find_images(directory: str) -> List[str]:
     images = []
+    if not os.path.isdir(directory):
+        return []
     for file in os.listdir(directory):
         if file.lower().endswith((".png", ".jpg", ".jpeg")):
             images.append(os.path.join(directory, file))

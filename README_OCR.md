@@ -29,5 +29,21 @@ pip install -r requirements.txt
 python ocr.py --input_dir ./ --output_dir ./results
 ```
 
+## Tests ausführen
+
+Um die Tests auszuführen, stellen Sie sicher, dass pytest installiert ist:
+
+```bash
+pip install pytest
+```
+
+Führen Sie dann die Tests mit folgendem Befehl aus:
+
+```bash
+pytest test_simpleocr.py
+```
+
+Die Tests prüfen die Kernfunktionen `find_images`, `ocr_image` und `evaluate_image` auf gültige und ungültige Eingaben.
+
 ## Lizenz
 MIT License
